@@ -171,7 +171,6 @@ Function Uninstall-RegistryDellApps {
                         $args = ($cmd -replace '(^.*msiexec\.exe\s*)','') + ' /qn /norestart'
                         Start-Process msiexec.exe -ArgumentList $args -Wait -NoNewWindow
                     } else {
-                        # Fixed: Properly quote the command when it contains spaces
                         Start-Process cmd.exe -ArgumentList "/C `"`"$cmd`" /quiet`"" -Wait -NoNewWindow
                     }
                     Write-Log ("Removed: {0}" -f $name)
@@ -214,5 +213,6 @@ foreach ($entry in $ExeUninstallers) { Uninstall-ExeApp -Path $entry.Path -Args 
 Uninstall-RegistryDellApps
 Clean-DellTasksAndServices
 Write-Log "=== Dell Bloatware removal COMPLETE ==="
+
 
 
